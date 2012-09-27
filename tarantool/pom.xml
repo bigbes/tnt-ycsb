@@ -7,23 +7,17 @@
     <version>0.1.4</version>
   </parent>
 
-  <repositories>
-    <repository>
-      <id>dgreenru-repo</id>
-      <name>dgreenru repository</name>
-      <url>http://dgreenru.github.com/repo/</url>
-    </repository>
-  </repositories>
-
   <artifactId>tarantool-binding</artifactId>
   <name>Tarantool DB Binding</name>
   <packaging>jar</packaging>
 
   <dependencies>
     <dependency>
-	  <groupId>org.tarantool</groupId>
-	  <artifactId>connector</artifactId>
-	  <version>0.1.0</version>
+	  <groupId>ru.mail</groupId>
+	  <artifactId>tarantool-connector</artifactId>
+	  <version>1.0.0</version>
+	  <scope>system</scope>
+	  <systemPath>${project.basedir}/lib/tarantool-connector-1.0.0.jar</systemPath>
     </dependency> 
 
     <dependency>

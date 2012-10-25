@@ -27,10 +27,16 @@ public class TarantoolClient extends DB{
     private int space = 0;
     
     public void init() {
-		Properties props = System.getProperties();
-        
-		String address = props.getProperty(HOST_PROPERTY, "127.0.0.1");
-        int port = Integer.parseInt(props.getProperty(PORT_PROPERTY, "33013"));
+		Properties props = getProperties();
+        port = 33013;
+		String address = props.getProperty(HOST_PROPERTY);
+		if (address == null){
+			address = "localhost"
+		}
+		String portString = props.getProperty(PORT_PROPERTY);
+		if (portString != null){
+			port = Integer.parseInt(portString);
+		}
         try{
         	connection = new SocketChannelTarantoolConnection(address, port);
         }

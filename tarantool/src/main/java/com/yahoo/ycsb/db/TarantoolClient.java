@@ -28,7 +28,7 @@ public class TarantoolClient extends DB{
     
     public void init() {
 		Properties props = getProperties();
-        port = 33013;
+        int port = 33013;
 		String address = props.getProperty(HOST_PROPERTY);
 		if (address == null){
 			address = "localhost";

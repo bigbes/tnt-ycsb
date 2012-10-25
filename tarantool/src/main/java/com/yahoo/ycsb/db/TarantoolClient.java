@@ -7,7 +7,6 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.Vector;
 import java.util.logging.Level;
-//import java.util.logging.Logger;
 
 import org.tarantool.core.TarantoolConnection;
 import org.tarantool.core.Tuple;
@@ -21,8 +20,6 @@ import com.yahoo.ycsb.StringByteIterator;
 
 public class TarantoolClient extends DB{
 	TarantoolConnection connection;
-	Properties props = System.getProperties();
-	//private static Logger logger = Logger.getLogger("com.yahoo.ycsb.db.TarantoolClient");
 	
 	public static final String HOST_PROPERTY = "tnt.host";
     public static final String PORT_PROPERTY = "tnt.port";
@@ -30,7 +27,9 @@ public class TarantoolClient extends DB{
     private int space = 0;
     
     public void init() {
-        String address = props.getProperty(HOST_PROPERTY, "127.0.0.1");
+		Properties props = System.getProperties();
+        
+		String address = props.getProperty(HOST_PROPERTY, "127.0.0.1");
         int port = Integer.parseInt(props.getProperty(PORT_PROPERTY, "33013"));
         try{
         	connection = new SocketChannelTarantoolConnection(address, port);
@@ -59,7 +58,6 @@ public class TarantoolClient extends DB{
 			connection.insertOrReplace(space, tuple);
 		} catch (TarantoolException e){
 			e.printStackTrace();
-			//logger.log(Level.WARNING, "Insert "+e.getCode());
 			return 1;
 		}
 		return 0;
@@ -73,7 +71,6 @@ public class TarantoolClient extends DB{
 		try {
 			resp = connection.findOne(space, 0, 0, tup);
 		} catch (TarantoolException e) {
-			//logger.log(Level.WARNING, "Read "+e.getCode());
 			return 1;
 		} 
 		if (resp == null)
@@ -97,7 +94,6 @@ public class TarantoolClient extends DB{
 			response = connection.call(space, "box.select_range", args);
 		} catch (TarantoolException e){
 			e.printStackTrace();
-			//logger.log(Level.WARNING, "Scan "+e.getCode());
 			return 1;
 		}
 		HashMap<String, String> temp = new HashMap<String, String>();
@@ -120,7 +116,6 @@ public class TarantoolClient extends DB{
 			connection.delete(space, new Tuple(1).setString(0, key, "UTF-8"));
 		} catch (TarantoolException e){
 			e.printStackTrace();
-			//logger.log(Level.WARNING, "Delete "+e.getCode());
 			return 1;
 		}
 		return 0;

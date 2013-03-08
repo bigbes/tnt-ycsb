@@ -25,19 +25,10 @@ COMMANDS = {
 
 DATABASES = {
     "basic"        : "com.yahoo.ycsb.BasicDB",
-    "cassandra-7"  : "com.yahoo.ycsb.db.CassandraClient7",
-    "cassandra-8"  : "com.yahoo.ycsb.db.CassandraClient8",
-    "cassandra-10" : "com.yahoo.ycsb.db.CassandraClient10",
-    "gemfire"      : "com.yahoo.ycsb.db.GemFireClient",
-    "hbase"        : "com.yahoo.ycsb.db.HBaseClient",
-    "infinispan"   : "com.yahoo.ycsb.db.InfinispanClient",
-    "jdbc"         : "com.yahoo.ycsb.db.JdbcDBClient",
-    "mapkeeper"    : "com.yahoo.ycsb.db.MapKeeperClient",
     "mongodb"      : "com.yahoo.ycsb.db.MongoDbClient",
-    "nosqldb"      : "com.yahoo.ycsb.db.NoSqlDbClient",
-    "redis"        : "com.yahoo.ycsb.db.RedisClient", 
-    "voldemort"    : "com.yahoo.ycsb.db.VoldemortClient",
+    "redis"        : "com.yahoo.ycsb.db.RedisClient",
     "tarantool"    : "com.yahoo.ycsb.db.TarantoolClient",
+    "tnt-call"     : "com.yahoo.ycsb.db.TarantoolCallClient",
 }
 
 OPTIONS = {
@@ -104,7 +95,7 @@ database = sys.argv[2]
 db_classname = DATABASES[database]
 options = sys.argv[3:]
 
-ycsb_command = ["java", "-cp", ":".join(find_jars(ycsb_home, database)), \
+ycsb_command = ["java", "-cp", os.pathsep.join(find_jars(ycsb_home, database)), \
                 COMMANDS[sys.argv[1]]["main"], "-db", db_classname] + options
 if command:
     ycsb_command.append(command)

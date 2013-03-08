@@ -15,8 +15,8 @@
     </repository>
   </repositories>
 
-  <artifactId>tarantool-binding</artifactId>
-  <name>Tarantool DB Binding</name>
+  <artifactId>tnt-call-binding</artifactId>
+  <name>Tarantool-CALL DB Binding</name>
   <packaging>jar</packaging>
 
   <dependencies>

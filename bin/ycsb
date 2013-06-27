@@ -26,6 +26,7 @@ COMMANDS = {
 DATABASES = {
     "basic"        : "com.yahoo.ycsb.BasicDB",
     "mongodb"      : "com.yahoo.ycsb.db.MongoDbClient",
+    "tokumx"       : "com.yahoo.ycsb.db.MongoDbClient",
     "redis"        : "com.yahoo.ycsb.db.RedisClient",
     "tarantool"    : "com.yahoo.ycsb.db.TarantoolClient",
     "tnt-call"     : "com.yahoo.ycsb.db.TarantoolCallClient",

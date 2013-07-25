@@ -6,14 +6,15 @@ This section descrives how to run YCSB on Tarantool running locally.
 
 First, clone Tarantool from it's own git repo and build it(You'll need cmake >= 2.6 and gcc ~>= 4.4):
 
-	git clone git://github.com/mailru/tarantool.git -b master-stable
+	git clone git://github.com/mailru/tarantool.git -b master
 	cd tarantool
 	cmake .
 	make
 	cp test/box/tarantool.cfg test/var/
 	cp src/box/tarantool_box test/var/
 	cd test/var
-	./tarantool_box
+	./tarantool_box --init-storage
+	./tarantool_box &
 
 OR you can simply download ans install binary package for your GNU/Linux or BSD distro from http://tarantool.org/download.html
 

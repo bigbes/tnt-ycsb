@@ -2,38 +2,35 @@
 
 ## Introduction
 
-Tarantool is NoSQL In-Memory Key-Value DB, which is widely used in mail.ru.
-It's opensource, hosted on [github][tnt-github].
-Tarantool supports number of features:
+Tarantool is a NoSQL In-Memory database.
+It's distributed under BSD licence and is hosted on [github][tnt-github].
 
-* Defferent types of index: HASH (Faster than TREE, but less functionality), TREE and BITSET (Bit operations on values in indexes)
-* Multipart Keys for both HASH and TREE's
-* Data persistence is avhieved by Write Ahead Log(WAL) and snapshots.
-* Supports asynchronous replication, hot standby.
-* Uses coroutines and async.IO to implement high-performance lock-free access to data.
-* Stored procedures in Lua (Using LuaJIT)
-* Supports plugins written on C/C++ (Have two basic plugins for working with MySQL and PostgreSQL)
-* Have support of memcached protocol
+Tarantool features:
+
+* Defferent index types: HASH (the fastest), TREE (range and ordered retreival), BITSET (bit  mask search).
+* multipart keys for HASH and TREE indexes
+* Data persistence with by Write Ahead Log (WAL) and snapshots.
+* asynchronous replication, hot standby.
+* coroutines and async. IO are used to implement high-performance lock-free access to data.
+* stored procedures in Lua (Using LuaJIT)
+* supports plugins written on C/C++ (Have two basic plugins for working with MySQL and PostgreSQL)
+* supports memcached text protocol
 
 ## Quick start
 
-This section descrives how to run YCSB on Tarantool running locally.
+This section descrives how to run YCSB against a local Tarantool instance
 
 ### 1. Start Tarantool
 
 First, clone Tarantool from it's own git repo and build it (You'll need cmake >= 2.6 and gcc ~>= 4.4):
-
-	git clone git@github.com:tarantool/tarantool.git --recursive
-	cd tarantool
-	cmake .
-	make
+Compile tarantool (described in our [README.md][tnt-readme])
 	cp YCSB/tarantool/config/tarantool-tree.cfg <vardir>
 	cp TNT/src/box/tarantool_box <vardir>
 	cd <vardir>
 	./tarantool_box --init-storage
 	./tarantool_box &
 
-OR you can simply download ans install binary package for your GNU/Linux or BSD distro from http://tarantool.org/download.html
+OR you can simply download ans install a binary package for your GNU/Linux or BSD distro from http://tarantool.org/download.html
 
 ### 2. Set Up YCSB
 
@@ -70,3 +67,4 @@ If tnt.call is set to True - you may benchmark Tarantool Lua bindings,
 instead of Tarantool basic Protocol.
 
 [tnt-github]:https://github.com/tarantool/tarantool/
+[tnt-readme]:https://github.com/tarantool/tarantool/blob/master/README.md

@@ -46,7 +46,7 @@
     <maven.assembly.version>2.2.1</maven.assembly.version>
     <mongodb.version>2.8.0</mongodb.version>
     <redis.version>2.1.0</redis.version>
-    <tarantool.version>0.1.3</tarantool.version>
+    <tarantool.version>0.1.4-JDK6-SNAPSHOT</tarantool.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
@@ -55,7 +55,6 @@
     <module>mongodb</module>
     <module>redis</module>
     <module>tarantool</module>
-    <module>tnt-call</module>
     <module>distribution</module>
   </modules>
 

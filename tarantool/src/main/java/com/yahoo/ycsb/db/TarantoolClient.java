@@ -21,10 +21,10 @@ import com.yahoo.ycsb.StringByteIterator;
 public class TarantoolClient extends DB{
 	TarantoolConnection connection;
 	
-	public static final String HOST_PROPERTY = "tnt.host";
-	public static final String PORT_PROPERTY = "tnt.port";
-	public static final String CALL_PROPERTY = "tnt.call";
-
+	public static final String HOST_PROPERTY  = "tnt.host" ;
+	public static final String PORT_PROPERTY  = "tnt.port" ;
+	public static final String CALL_PROPERTY  = "tnt.call" ;
+	public static final String SPACE_PROPERTY = "tnt.space";
 	private boolean callValue;
 
 	private int space = 0;
@@ -44,6 +44,11 @@ public class TarantoolClient extends DB{
 			this.callValue = false;
 		} else {
 			this.callValue = Boolean.parseBoolean(callString);
+		}
+
+		String spaceString = props.getProperty(SPACE_PROPERTY);
+		if (spaceString != null) {
+			this.space = Integer.parseInt(spaceString);
 		}
 		try {
 			connection = new SocketChannelTarantoolConnection(address, port);
@@ -72,7 +77,7 @@ public class TarantoolClient extends DB{
 					tuple.setLuaString(2 * j + 3, i.getValue().toString(), "UTF-8");
 					j++;
 				}
-				connection.call(space, "box.update", tuple);
+				connection.call(space, "box.replace", tuple);
 			}
 			else {
 				tuple.setString(0, key, "UTF-8");
@@ -108,8 +113,8 @@ public class TarantoolClient extends DB{
 	public int read(String table, String key, Set<String> fields,
 			HashMap<String, ByteIterator> result) {
 		Tuple tuple = new Tuple(this.callValue ? 3 : 1);
-		Tuple resp = new Tuple(0);
 		try {
+			Tuple resp;
 			if (this.callValue) {
 				tuple.setLuaArgument(0, space);
 				tuple.setLuaArgument(1, 0);
@@ -122,15 +127,14 @@ public class TarantoolClient extends DB{
 					return 1;
 				}
 			}
+			result = tuple_convert_filter(resp, fields);
+			return 0;
 		} catch (TarantoolException e) {
 			e.printStackTrace();
 			return 1;
 		} catch (IndexOutOfBoundsException e) {
-			e.printStackTrace();
 			return 1;
 		}
-		result = tuple_convert_filter(resp, fields);
-		return 0;
 	}
 	@Override
 	public int scan(String table, String startkey, int recordcount, Set<String> fields,
@@ -162,13 +166,16 @@ public class TarantoolClient extends DB{
 			if (this.callValue) {
 				tuple.setLuaArgument(0, space);
 				tuple.setLuaString(1, key, "UTF-8");
-				connection.call(space, "box.delete", tuple);
+				connection.call(space, "box.delete", tuple).get(0);
 			} else {
 				tuple.setString(0, key, "UTF-8");
-				connection.delete(space, tuple);
+				if (connection.delete(space, tuple) == 0)
+					return 1;
 			}
 		} catch (TarantoolException e) {
 			e.printStackTrace();
+			return 1;
+		} catch (IndexOutOfBoundsException e) {
 			return 1;
 		}
 		return 0;

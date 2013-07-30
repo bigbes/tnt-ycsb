@@ -68,7 +68,7 @@ instead of Tarantool basic Protocol.
 
 Tips: If you want to flush all data in space with number N use:
 	
-	echo 'lua box.space[0]:truncate()' | nc localhost 33015
+	echo 'lua box.space[N]:truncate()' | nc localhost 33015
 
 [tnt-github]:https://github.com/tarantool/tarantool/
 [tnt-readme]:https://github.com/tarantool/tarantool/blob/master/README.md

@@ -22,9 +22,9 @@ This section descrives how to run YCSB against a local Tarantool instance
 
 ### 1. Start Tarantool
 
-First, clone Tarantool from it's own git repo and build it (You'll need cmake >= 2.6 and gcc ~>= 4.4):
-Compile tarantool (described in our [README.md][tnt-readme])
-	cp YCSB/tarantool/config/tarantool-tree.cfg <vardir>
+First, clone Tarantool from it's own git repo and build it (described in our [README.md][tnt-readme]):
+
+	cp YCSB/tarantool/config/tarantool-tree.cfg <vardir>/tarantool.cfg
 	cp TNT/src/box/tarantool_box <vardir>
 	cd <vardir>
 	./tarantool_box --init-storage
@@ -65,6 +65,10 @@ Which space YCSB must use for benchmark Tarantool
     (possible values: false, true)
 If tnt.call is set to True - you may benchmark Tarantool Lua bindings,
 instead of Tarantool basic Protocol.
+
+Tips: If you want to flush all data in space with number N use:
+	
+	echo 'lua box.space[0]:truncate()' | nc localhost 33015
 
 [tnt-github]:https://github.com/tarantool/tarantool/
 [tnt-readme]:https://github.com/tarantool/tarantool/blob/master/README.md
